@@ -3,7 +3,7 @@
 ## Rationale
 
 Clojure is so concise and expressive some libraries can fit in a tweet. Tweets are also immutable —
-this makes them a very safe and reliable dependency target. Why go through hassle of setting up a repo 
+this makes them a very safe and reliable dependency source. Why go through the hassle of setting up a repo 
 for a one-liner when you can tweet it?
 
 ## Usage:
