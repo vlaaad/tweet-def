@@ -1,0 +1,1 @@
+{tweet/def io.github.vlaaad.tweet-def/read-deftweet}
