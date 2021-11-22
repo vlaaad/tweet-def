@@ -19,7 +19,7 @@ Here is an example [tweet library](https://twitter.com/gigasquid/status/55789774
 You can now depend on this library in your code:
 
 ``` 
-$ clj -Sdeps '{:deps {io.github.vlaaad/tweet-def {:git/tag "v1" :git/sha "7f560d6"}}}'
+$ clj -Sdeps '{:deps {io.github.vlaaad/tweet-def {:git/tag "v2" :git/sha "134a803"}}}'
 Clojure 1.10.3
 user=> (require '[io.github.vlaaad.tweet-def :as tweet])
 nil
