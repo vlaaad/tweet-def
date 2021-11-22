@@ -1,7 +1,8 @@
 (ns io.github.vlaaad.tweet-def
   (:require [clojure.string :as str]
             [clojure.data.json :as json]
-            [clj-http.client :as http]))
+            [clj-http.client :as http])
+  (:import [org.apache.commons.text StringEscapeUtils]))
 
 (defn- id [tweet-url]
   (or (second (re-find #"status/(.+)" tweet-url))
@@ -44,7 +45,8 @@
         :body
         (json/read-str :key-fn keyword)
         :full_text
-        (or (throw (ex-info "Can't load tweet" {:response response}))))))
+        (or (throw (ex-info "Can't load tweet" {:response response})))
+        StringEscapeUtils/unescapeHtml4)))
 
 (defn def [tweet-url]
   (let [tweet (load-tweet tweet-url)
@@ -53,5 +55,5 @@
     (eval (read-string (subs tweet i)))))
 
 (comment
-  (io.github.vlaaad.tweet-def/def "https://twitter.com/gigasquid/status/557897741511454724")
+  (io.github.vlaaad.tweet-def/def "https://twitter.com/cgrand/status/1281527501387440128")
   (penultimate [1 2 3]) => 2)
