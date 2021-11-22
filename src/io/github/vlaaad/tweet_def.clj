@@ -11,6 +11,7 @@
   (delay
     (let [response (http/request
                      {:method :get
+                      :cookie-policy :none
                       :url "https://abs.twimg.com/responsive-web/client-web/main.90f9e505.js"})]
       (or (->> response
                :body
@@ -22,6 +23,7 @@
   (delay
     (let [response (http/request
                      {:method :post
+                      :cookie-policy :none
                       :headers {"Authorization" (str "Bearer " @bearer)}
                       :url "https://api.twitter.com/1.1/guest/activate.json"})]
       (-> response
@@ -34,6 +36,7 @@
   (let [id (id tweet-url)
         response (http/request
                    {:method :get
+                    :cookie-policy :none
                     :headers {"Authorization" (str "Bearer " @bearer)
                               "x-guest-token" @guest-token}
                     :url (str "https://api.twitter.com/1.1/statuses/show/" id ".json?tweet_mode=extended")})]
@@ -43,15 +46,12 @@
         :full_text
         (or (throw (ex-info "Can't load tweet" {:response response}))))))
 
-(defn deftweet [tweet-url]
+(defn def [tweet-url]
   (let [tweet (load-tweet tweet-url)
         i (or (str/index-of tweet "(def")
               (throw (ex-info "Can't find code definition in tweet" {:tweet tweet})))]
     (eval (read-string (subs tweet i)))))
 
-(defn read-deftweet [expr]
-  `(deftweet ~expr))
-
 (comment
-  #tweet/def "https://twitter.com/gigasquid/status/557897741511454724"
+  (io.github.vlaaad.tweet-def/def "https://twitter.com/gigasquid/status/557897741511454724")
   (penultimate [1 2 3]) => 2)
